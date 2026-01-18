@@ -53,7 +53,6 @@ function App() {
         </main>
       </div>
 
-      {/* The AI Assistant UI */}
       <AITerminal />
 
       <AnimatePresence mode="wait">

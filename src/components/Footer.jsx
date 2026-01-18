@@ -34,8 +34,8 @@ const Footer = () => {
               Framer Motion + Lucide Icons
             </p>
             <div className="flex md:justify-end gap-5 pt-2">
-              <a href="#" className="text-slate-500 hover:text-white transition-colors"><Github size={18} /></a>
-              <a href="#" className="text-slate-500 hover:text-cyan-400 transition-colors"><Linkedin size={18} /></a>
+              <a href="GitHub: https://github.com/SaaammmyyyS" className="text-slate-500 hover:text-white transition-colors"><Github size={18} /></a>
+              <a href="https://www.linkedin.com/in/ivan-sam-wabina-875a91297/" className="text-slate-500 hover:text-cyan-400 transition-colors"><Linkedin size={18} /></a>
               <a href={`mailto:${DATA.profile.email}`} className="text-slate-500 hover:text-orange-500 transition-colors"><Mail size={18} /></a>
             </div>
           </div>

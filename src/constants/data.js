@@ -7,6 +7,10 @@ export const DATA = {
     location: "Davao City, PH",
     status: "Open for Opportunities",
     primaryStack: "Spring Boot // NestJS",
+    socials: {
+      github: "https://github.com/SaaammmyyyS",
+      linkedin: "https://www.linkedin.com/in/ivan-sam-wabina-875a91297/",
+    },
     bio: {
       tagline: "Hi there! I'm a software engineer dedicated to building the backbone of digital experiences.",
       description: "I specialize in architecting resilient backends and high-throughput systems. Currently, I'm focusing on transforming complex business requirements into scalable, production-ready infrastructure."
