@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, X, Cpu, MessageSquare, ShieldCheck, Database, Sparkles } from 'lucide-react';
 
 const FormattedMessage = ({ text }) => {
+  if (!text) return null;
   const parts = text.split(/(\*\*.*?\*\*)/g);
   return (
     <span className="whitespace-pre-wrap">
@@ -24,6 +25,8 @@ const Typewriter = ({ text, delay = 10, onFinished }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (!text) return;
+
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
         setCurrentText(prev => prev + text[currentIndex]);
@@ -35,6 +38,7 @@ const Typewriter = ({ text, delay = 10, onFinished }) => {
     }
   }, [currentIndex, delay, text, onFinished]);
 
+  if (!text) return null;
   return <FormattedMessage text={currentText} />;
 };
 
@@ -82,6 +86,11 @@ const AITerminal = () => {
     const query = directQuery || input;
     if (!query.trim() || isTyping) return;
 
+    const cleanHistory = messages.slice(-4).map(m => ({
+      role: m.role,
+      content: m.content.replace(/\*\*/g, '').replace('SYSTEM_BOOT: ', '')
+    }));
+
     setInput('');
     setShowHint(false);
     setMessages(prev => [...prev, { role: 'user', content: query }]);
@@ -91,10 +100,16 @@ const AITerminal = () => {
       const response = await fetch(import.meta.env.VITE_AI_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: query }),
+        body: JSON.stringify({
+            question: query,
+            history: cleanHistory
+        }),
       });
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'assistant', content: data.answer, isAnimated: false }]);
+
+      const aiResponse = data.answer || "**ERROR**: Uplink returned empty payload.";
+      setMessages(prev => [...prev, { role: 'assistant', content: aiResponse, isAnimated: false }]);
+
     } catch (error) {
       setMessages(prev => [...prev, { role: 'assistant', content: '**ERROR**: UPLINK_TIMEOUT.\nCheck your protocol.', isAnimated: false }]);
     } finally {
@@ -104,19 +119,16 @@ const AITerminal = () => {
 
   return (
     <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[200] flex flex-col items-end gap-3">
-
-      {/* HINT BUBBLE */}
       {showHint && !isOpen && (
-        <div className="relative bg-[#0a0a0a] border border-cyan-500/50 p-3 rounded-xl shadow-2xl max-w-[220px] md:max-w-[280px] animate-in slide-in-from-right-5">
+        <div className="relative bg-[#0a0a0a] border border-cyan-500/50 p-3 rounded-xl shadow-2xl max-w-[220px] md:max-w-[280px] animate-in slide-in-from-right-5 font-mono">
           <button onClick={() => setShowHint(false)} className="absolute -top-2 -right-2 bg-black border border-cyan-500/50 rounded-full p-1 text-cyan-500 hover:text-white"><X size={10} /></button>
-          <div className="text-[10px] md:text-[11px] font-mono text-cyan-100 leading-tight italic">
+          <div className="text-[10px] md:text-[11px] text-cyan-100 leading-tight italic">
             "I have access to Ivan's full stack and S3-stored project logs."
           </div>
-          <button onClick={() => {setIsOpen(true); setShowHint(false);}} className="mt-2 text-[9px] font-mono text-cyan-400 font-bold uppercase underline">Init_Uplink</button>
+          <button onClick={() => {setIsOpen(true); setShowHint(false);}} className="mt-2 text-[9px] text-cyan-400 font-bold uppercase underline">Init_Uplink</button>
         </div>
       )}
 
-      {/* FLOATING ACTION BUTTON */}
       {!isOpen && (
         <button onClick={() => setIsOpen(true)} className="w-12 h-12 md:w-14 md:h-14 bg-black border border-cyan-500/30 text-cyan-500 flex items-center justify-center rounded-full hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all group relative">
           <MessageSquare size={20} className="md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
@@ -124,11 +136,8 @@ const AITerminal = () => {
         </button>
       )}
 
-      {/* TERMINAL WINDOW */}
       {isOpen && (
         <div className="w-[calc(100vw-2rem)] md:w-[520px] max-w-[520px] bg-[#080808]/95 backdrop-blur-md border border-cyan-500/20 shadow-2xl flex flex-col animate-in slide-in-from-bottom-5 duration-300 rounded-lg overflow-hidden">
-
-          {/* Header Strip */}
           <div className="bg-cyan-950/40 p-3 flex items-center justify-between border-b border-white/10">
             <div className="flex gap-4 items-center">
                <span className="text-[9px] font-mono text-cyan-500/80 uppercase flex items-center gap-1.5"><ShieldCheck size={12}/> SECURE_NODE</span>
@@ -137,7 +146,6 @@ const AITerminal = () => {
             <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white p-1 transition-colors"><X size={20} /></button>
           </div>
 
-          {/* Terminal Body */}
           <div ref={scrollRef} className="h-[350px] md:h-[420px] overflow-y-auto p-5 space-y-6 font-mono text-[12px] leading-relaxed scrollbar-thin scrollbar-thumb-cyan-900/50">
             {messages.map((msg, i) => (
               <div key={i} className={`flex gap-3 ${msg.role === 'assistant' ? 'text-cyan-400' : 'text-slate-200'}`}>
@@ -158,7 +166,6 @@ const AITerminal = () => {
             )}
           </div>
 
-          {/* Footer & Input */}
           <div className="p-4 bg-black border-t border-white/10">
             <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar pb-1">
               {['/stack', '/projects', '/bio'].map(cmd => (

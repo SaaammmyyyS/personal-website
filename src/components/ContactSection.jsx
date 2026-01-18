@@ -17,7 +17,6 @@ const ContactSection = ({ formData, setFormData }) => {
     setTimeout(() => {
       setStatus('SUCCESS: LOGGED_TO_INTERNAL_JOURNAL');
       setIsTransmitting(false);
-      // We don't clear the form so you can see your data after clicking
     }, 2000);
   };
 
