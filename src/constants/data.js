@@ -138,5 +138,15 @@ export const DATA = {
       ],
       tech: ["Laravel", "PHP", "MySQL", "Git"]
     }
-  ]
+  ],
+  philosophy: {
+    coding: "Write code for the next engineer, not the compiler. Prioritize readability and maintainability.",
+    scaling: "Avoid premature optimization. Build for 10x the current load, but design for 100x.",
+    problem_solving: "Deep dive into the 'Why' before touching the 'How'."
+  },
+  skillProficiency: {
+    backend: ["Rest API Design", "Microservices", "Event-Driven Architecture", "Asynchronous Processing"],
+    database: ["Relational Modeling (PostgreSQL)", "NoSQL Design Patterns (DynamoDB)", "Caching Strategies (Redis)"],
+    aws: ["IAM Policy Hardening", "Lambda Power Tuning", "Serverless Framework", "CloudWatch Observability"]
+  },
 };

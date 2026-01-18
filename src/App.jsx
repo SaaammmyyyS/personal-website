@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { DATA } from './constants/data';
 
-// Component Imports
 import BackgroundSystem from './components/BackgroundSystem';
 import TechnicalHeader from './components/TechnicalHeader';
 import Hero from './components/Hero';
@@ -14,6 +13,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
 import CareerModal from './components/CareerModal';
+import AITerminal from './components/AITerminal'; // New Component
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -52,6 +52,9 @@ function App() {
           <Footer />
         </main>
       </div>
+
+      {/* The AI Assistant UI */}
+      <AITerminal />
 
       <AnimatePresence mode="wait">
         {selectedProject && (

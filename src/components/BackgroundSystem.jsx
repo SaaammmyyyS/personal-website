@@ -11,7 +11,7 @@ const BackgroundSystem = () => {
         width: '100%',
         height: '100%',
         zIndex: 0,
-        pointerEvents: 'none', // Crucial: Clicks pass through to the projects
+        pointerEvents: 'none',
         backgroundColor: '#050505'
       }}
     >
