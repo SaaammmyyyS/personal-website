@@ -1,16 +1,46 @@
-# React + Vite
+# 🤖 IS_ARCHITECT_v1.0 (AI Terminal)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A serverless, context-aware AI Terminal built with **React** and **AWS Bedrock**. This isn't just a chat window—it’s a custom **Retrieval-Augmented Generation (RAG)** pipeline that queries my career history stored securely in AWS.
 
-Currently, two official plugins are available:
+## 🏗️ System Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The following diagram visualizes the request lifecycle, from the UI trigger to the LLM processing and back.
 
-## React Compiler
+```mermaid
+sequenceDiagram
+    participant User
+    participant React as React (Frontend)
+    participant Lambda as AWS Lambda (Python)
+    participant S3 as Amazon S3
+    participant Bedrock as Amazon Bedrock (Claude 3)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+    User->>React: Inputs Query / Clicks Command
+    React->>React: Slices History (Last 4 turns)
+    React->>Lambda: POST /chat (Question + Context)
+    activate Lambda
+    Lambda->>S3: Fetch data.js (Identity Vault)
+    S3-->>Lambda: Return Technical JSON
+    Lambda->>Lambda: Map Roles & Inject System Prompt
+    Lambda->>Bedrock: Invoke Model (Identity + History + Question)
+    Bedrock-->>Lambda: Return Technical Analysis
+    Lambda-->>React: 200 OK (JSON Response)
+    deactivate Lambda
+    React->>User: Typewriter Animation & Formatted UI
+```
 
-## Expanding the ESLint configuration
+## 🛠️ Technical Deep-Dive
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Rolling Conversation Memory
+To maintain a stateful dialogue in a stateless serverless environment, the frontend manages a **"rolling context window."** By sending the last 4 exchanges with every request, the AI can resolve pronouns (e.g., *"Tell me more about it"*) without the latency or cost of a dedicated database like DynamoDB.
+
+
+
+### 2. Identity Injection (RAG)
+Instead of hardcoding my bio into the LLM prompt, the system performs a lightweight **Retrieval-Augmented Generation (RAG)**. The Lambda fetches a centralized `data.js` object from **Amazon S3** at runtime. This ensures the AI always has the most up-to-date information regarding my projects and skill set without retraining the model.
+
+
+
+## 🔒 Security
+* **PII Masking:** Strict system prompts prevent the AI from revealing internal AWS Account IDs, S3 bucket names, or private configuration parameters.
+* **CORS Policy:** Restrictive headers ensure only my authorized frontend domain can uplink to the Lambda, preventing unauthorized API usage.
+* **Response Validation:** Built-in safety guards in the React layer handle empty or failed payloads gracefully, ensuring the UI remains stable during network interruptions.
