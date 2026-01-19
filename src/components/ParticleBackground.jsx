@@ -14,7 +14,9 @@ const ParticleBackground = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       particles = [];
-      const density = (canvas.width * canvas.height) / 12000;
+      const baseDensity = window.innerWidth < 768 ? 20000 : 12000;
+      const density = (canvas.width * canvas.height) / baseDensity;
+
       for (let i = 0; i < density; i++) {
         particles.push({
           x: Math.random() * canvas.width,
@@ -86,7 +88,13 @@ const ParticleBackground = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-0 bg-[#020617]"
+      onContextMenu={(e) => e.preventDefault()}
+    />
+  );
 };
 
 export default ParticleBackground;

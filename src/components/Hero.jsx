@@ -50,7 +50,6 @@ const Hero = () => {
             </motion.button>
           </div>
 
-          {/* Identity Grid */}
           <div className="flex flex-col justify-end gap-2 font-mono text-[10px] md:text-xs text-slate-500">
             {[
               { label: 'ROLE', value: DATA.profile.displayRole, color: 'text-white' },

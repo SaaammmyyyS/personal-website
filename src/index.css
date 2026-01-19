@@ -4,23 +4,47 @@
   --color-architect-navy: #050505;
   --color-architect-cyan: #22D3EE;
   --color-architect-orange: #F97316;
+
+  /* Restoration of Tremor Dashboard Colors */
+  --color-tremor-brand: var(--color-architect-cyan);
+  --color-tremor-background: var(--color-architect-navy);
 }
 
 :root {
   background-color: #050505;
+  --tremor-bg: #050505;
 }
 
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  /* This ensures the body itself doesn't block the React layers */
-  background: transparent;
-  color: white;
-  font-family: sans-serif;
+  background: #050505;
+  color: #cbd5e1; /* slate-300 */
+  font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar for the Terminal */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.2);
+  border-radius: 10px;
 }

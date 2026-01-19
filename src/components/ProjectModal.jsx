@@ -74,7 +74,6 @@ const ProjectModal = ({ project, onClose }) => {
               </div>
 
               <div className="flex flex-col gap-3">
-                {/* 1. GITHUB BUTTON LOGIC */}
                 {project.github && !project.isPrivate ? (
                   <a
                     href={project.github}
@@ -91,7 +90,6 @@ const ProjectModal = ({ project, onClose }) => {
                   </div>
                 )}
 
-                {/* 2. LIVE DEMO BUTTON LOGIC */}
                 {project.link && project.link !== "#" && (
                   <a
                     href={project.link}

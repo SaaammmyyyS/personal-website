@@ -1,0 +1,42 @@
+/* AWS Amplify Authenticator Overrides */
+[data-amplify-authenticator] {
+  backdrop-filter: blur(25px) saturate(150%);
+  border-radius: 2.5rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+.amplify-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+  border-radius: 0.75rem !important;
+}
+
+.amplify-label {
+  color: #22d3ee !important;
+  font-family: monospace;
+  text-transform: uppercase;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em;
+}
+
+.amplify-button--primary {
+  background: #06b6d4 !important;
+  color: black !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+  border-radius: 0.75rem !important;
+}
+
+.amplify-button--link {
+  color: #64748b !important;
+  font-size: 0.7rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.amplify-button--link:hover {
+  color: #22d3ee !important;
+  background: transparent !important;
+}
