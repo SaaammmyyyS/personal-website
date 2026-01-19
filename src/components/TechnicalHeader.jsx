@@ -7,6 +7,7 @@ const TechnicalHeader = () => {
 
   const navLinks = [
     { name: 'projects', href: '#projects' },
+    { name: 'tech stack', href: '#specs' },
     { name: 'history', href: '#career' },
     { name: 'contact', href: '#contact' },
   ];
