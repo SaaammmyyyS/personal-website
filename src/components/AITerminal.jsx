@@ -38,29 +38,57 @@ const Typewriter = ({ text, delay = 10, onFinished }) => {
 const AICoreLogo = ({ isOpen, isTyping }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.1 }}
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
+      animate={{ y: [0, -4, 0] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center cursor-pointer group"
     >
+      {/* RADIATING PULSE EFFECT */}
+      {[...Array(3)].map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{ scale: 1, opacity: 0.5 }}
+          animate={{ scale: isTyping ? [1, 2, 1] : [1, 1.8], opacity: 0 }}
+          transition={{
+            duration: isTyping ? 1 : 2.5,
+            repeat: Infinity,
+            delay: i * 0.8,
+            ease: "easeOut"
+          }}
+          className="absolute inset-0 border border-cyan-500/50 rounded-full"
+        />
+      ))}
+
+      {/* Core Glow */}
       <motion.div
-        animate={isTyping ? { scale: [1, 1.4, 1], opacity: [0.3, 0.7, 0.3] } : { scale: [1, 1.1, 1], opacity: [0.2, 0.1, 0.2] }}
-        transition={{ duration: isTyping ? 0.4 : 3, repeat: Infinity }}
+        animate={isTyping ? { scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4] } : { opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: isTyping ? 0.5 : 3, repeat: Infinity }}
         className="absolute inset-0 bg-cyan-500/20 rounded-full blur-md group-hover:bg-cyan-400/30 transition-colors"
       />
 
+      {/* THE MESSAGE SYMBOL */}
       <motion.div
         animate={isTyping ? { x: [-1, 1, -1], y: [1, -1, 1] } : {}}
         transition={{ duration: 0.1, repeat: Infinity }}
-        className="relative w-10 h-10 z-10"
+        className="relative w-10 h-10 z-10 overflow-hidden rounded-sm"
       >
+        {/* Scanning Beam */}
+        <motion.div
+          animate={{ top: ['-10%', '110%'] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+          className="absolute left-0 w-full h-[1px] bg-cyan-400/60 shadow-[0_0_10px_rgba(34,211,238,1)] z-20 pointer-events-none"
+        />
+
         <svg viewBox="0 0 100 100" className="w-full h-full fill-none">
           <motion.path
             d="M10 35 L90 35 L90 75 L10 75 Z"
             stroke="currentColor"
             strokeWidth="3"
-            className="text-cyan-500 group-hover:text-cyan-400"
+            className="text-cyan-500 group-hover:text-cyan-400 transition-colors"
             animate={{ opacity: isOpen ? 0.4 : 1 }}
           />
+
           <AnimatePresence mode="wait">
             {!isOpen ? (
               <motion.path
@@ -75,11 +103,11 @@ const AICoreLogo = ({ isOpen, isTyping }) => {
               />
             ) : (
               <motion.g key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                {[0, 1].map((i) => (
+                {[0, 1, 2].map((i) => (
                   <motion.path
                     key={i}
-                    animate={{ y: [-5, -20], opacity: [0, 1, 0] }}
-                    transition={{ duration: 1, repeat: Infinity, delay: i * 0.5 }}
+                    animate={{ y: [-5, -25], opacity: [0, 1, 0] }}
+                    transition={{ duration: 1, repeat: Infinity, delay: i * 0.4 }}
                     d="M35 30 L50 15 L65 30"
                     stroke="#22d3ee"
                     strokeWidth="3"
@@ -92,14 +120,14 @@ const AICoreLogo = ({ isOpen, isTyping }) => {
         </svg>
       </motion.div>
 
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
+      {/* Decorative HUD Corners */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
         <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400" />
         <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400" />
       </div>
     </motion.div>
   );
 };
-
 
 const AITerminal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -131,7 +159,7 @@ const AITerminal = () => {
 
     const historyForAPI = messages
       .filter(m => m.role === 'user' || (m.role === 'assistant' && !m.content.includes("Welcome. I am Ivan's Architectural Intelligence")))
-      .slice(-4) // Keep it short
+      .slice(-4)
       .map(m => ({
         role: m.role,
         content: m.content.replace(/\*\*/g, '')
@@ -146,10 +174,7 @@ const AITerminal = () => {
       const response = await fetch(import.meta.env.VITE_AI_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question: query,
-          history: historyForAPI
-        }),
+        body: JSON.stringify({ question: query, history: historyForAPI }),
       });
       const data = await response.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.answer || "No response from uplink.", isAnimated: false, meta: "INBOUND_DATA // STACK_READ" }]);
@@ -203,7 +228,7 @@ const AITerminal = () => {
                   <span className="text-[9px] text-cyan-500/80 uppercase flex items-center gap-1.5"><ShieldCheck size={12}/> ENCRYPTED_NODE</span>
                   <span className="text-[9px] text-emerald-500/80 uppercase flex items-center gap-1.5"><Activity size={12}/> SYSTEM_ACTIVE</span>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white"><X size={18} /></button>
+              <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white transition-colors"><X size={18} /></button>
             </div>
 
             <div ref={scrollRef} className="h-[380px] overflow-y-auto p-5 space-y-6 text-[12px] scrollbar-thin scrollbar-thumb-cyan-900/50">
