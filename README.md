@@ -1,17 +1,33 @@
-# 🤖 IS_ARCHITECT_v1.0 (AI Terminal)
+# 🤖 IS_ARCHITECT_v1.0 (AI Terminal & Admin Nexus)
 
-A serverless, context-aware AI Terminal built with **React** and **AWS Bedrock**. This isn't just a chat window—it’s a custom **Retrieval-Augmented Generation (RAG)** pipeline that queries my career history stored securely in AWS.
+![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-emerald?style=for-the-badge&logo=statuspage)
+![Stack](https://img.shields.io/badge/INFRA-AWS_SERVERLESS-cyan?style=for-the-badge&logo=amazon-aws)
+
+A serverless, context-aware AI Terminal and Administrative Control Center. This isn't just a chat window—it’s a custom **Retrieval-Augmented Generation (RAG)** pipeline that queries my technical history stored securely in the AWS cloud.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | React 18, Vite, Framer Motion | High-performance UI & Animations |
+| **Styling** | Tailwind CSS, Lucide | Technical "Nexus" Aesthetic |
+| **Auth** | AWS Amplify (Cognito) | Secure Admin access via /admin |
+| **AI/LLM** | Amazon Bedrock (Claude 3) | Contextual Reasoning & Analysis |
+| **Serverless** | AWS Lambda, S3 | Ephemeral API & Knowledge Storage |
 
 ## 🏗️ System Architecture
 
-The following diagram visualizes the request lifecycle, from the UI trigger to the LLM processing and back.
+### 1. AI Reasoning Lifecycle (RAG)
+The following visualization shows how the frontend bridges the gap between static data and LLM reasoning.
 
 ```mermaid
 sequenceDiagram
     participant User
-    participant React as React (Frontend)
+    participant React as React (Modular Frontend)
     participant Lambda as AWS Lambda (Python)
-    participant S3 as Amazon S3
+    participant S3 as Amazon S3 (Knowledge Base)
     participant Bedrock as Amazon Bedrock (Claude 3)
 
     User->>React: Inputs Query / Clicks Command
@@ -20,27 +36,54 @@ sequenceDiagram
     activate Lambda
     Lambda->>S3: Fetch data.js (Identity Vault)
     S3-->>Lambda: Return Technical JSON
-    Lambda->>Lambda: Map Roles & Inject System Prompt
+    Lambda->>Lambda: Inject System Prompt & Persona
     Lambda->>Bedrock: Invoke Model (Identity + History + Question)
-    Bedrock-->>Lambda: Return Technical Analysis
+    Bedrock-->>Lambda: Return Analysis
     Lambda-->>React: 200 OK (JSON Response)
     deactivate Lambda
     React->>User: Typewriter Animation & Formatted UI
 ```
 
-## 🛠️ Technical Deep-Dive
+### 2. Admin Authentication Flow
+The `/admin` route is guarded by **AWS Cognito**. Unauthorized users are redirected to the public portfolio, while authenticated admins gain access to the dashboard.
 
-### 1. Rolling Conversation Memory
-To maintain a stateful dialogue in a stateless serverless environment, the frontend manages a **"rolling context window."** By sending the last 4 exchanges with every request, the AI can resolve pronouns (e.g., *"Tell me more about it"*) without the latency or cost of a dedicated database like DynamoDB.
+```mermaid
+stateDiagram-v2
+    [*] --> PublicPortfolio
+    PublicPortfolio --> AdminRoute: User enters /admin
+    AdminRoute --> Authenticator: Check Auth Session
+    
+    state Authenticator {
+        [*] --> LoginPrompt: Not Logged In
+        LoginPrompt --> MFA_Check: Valid Credentials
+        MFA_Check --> Authorized: Token Issued
+        Authorized --> [*]
+    }
 
+    Authenticator --> PortfolioContainer: Cancel / Back
+    Authenticator --> AdminDashboard: Success
+    AdminDashboard --> PublicPortfolio: Sign Out
+```
+## 🔒 Security & Optimization
+* **Identity Vault:** Data is fetched from **Amazon S3** at runtime, ensuring the AI persona is always current without code redeploys.
+* **Environment Safety:** All AWS Resource IDs are handled via Vite environment variables (`.env`).
+* **PII Masking:** Strict system prompts prevent the AI from revealing internal AWS metadata.
 
+## 🔐 Admin Preview (Internal Access Only)
 
-### 2. Identity Injection (RAG)
-Instead of hardcoding my bio into the LLM prompt, the system performs a lightweight **Retrieval-Augmented Generation (RAG)**. The Lambda fetches a centralized `data.js` object from **Amazon S3** at runtime. This ensures the AI always has the most up-to-date information regarding my projects and skill set without retraining the model.
+Since the **Nexus Command Center** is restricted to administrator access via AWS Cognito, the following preview demonstrates the internal system monitoring and project management interface.
 
+### Dashboard Overview
+The dashboard provides a real-time "Command & Control" aesthetic, featuring:
+* **Global Telemetry**: Traffic flow analysis for AI node requests.
+* **Project Status**: Live monitoring of "CyberIntel" and "CloudSentry" modules.
+* **System Termination**: Emergency protocol controls for serverless endpoints.
 
+![Nexus Command Dashboard Preview](./public/nexus-command-preview.png)
 
-## 🔒 Security
-* **PII Masking:** Strict system prompts prevent the AI from revealing internal AWS Account IDs, S3 bucket names, or private configuration parameters.
-* **CORS Policy:** Restrictive headers ensure only my authorized frontend domain can uplink to the Lambda, preventing unauthorized API usage.
-* **Response Validation:** Built-in safety guards in the React layer handle empty or failed payloads gracefully, ensuring the UI remains stable during network interruptions.
+## 🧐 Why an Admin Dashboard?
+
+While this site appears as a static personal portfolio to the public, it is powered by a **dynamic serverless backend**. I built the **Nexus Command** interface to solve two specific challenges:
+
+1. **Live Content Management**: Instead of hardcoding project details, I can update my "Identity Vault" (S3) and tech stack in real-time without redeploying the entire frontend.
+2. **Infrastructure Monitoring**: It allows me to monitor AI API usage and "Terminate" Lambda nodes if I detect unusual traffic or cost spikes, acting as a personal **Cloud Operations** center.
