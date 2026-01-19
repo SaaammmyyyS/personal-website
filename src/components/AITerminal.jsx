@@ -174,7 +174,7 @@ const AITerminal = () => {
               <X size={10} />
             </button>
             <div className="text-[10px] md:text-[11px] text-cyan-100 leading-tight italic text-center">
-              "Establish a secure uplink to query my **AWS architecture** or **Fullstack proficiency**."
+              Message my AI Agent for a technical deep-dive 🫡
             </div>
           </motion.div>
         )}
