@@ -27,7 +27,6 @@ function App() {
         <main className="max-w-6xl mx-auto px-6 md:px-12 pt-20">
           <Hero />
 
-          {/* 01 / PROJECTS */}
           <section id="projects" className="py-32 border-t border-white/5">
             <SectionLabel number="01 /" text="Technical Prototypes" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
