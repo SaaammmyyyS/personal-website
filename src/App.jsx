@@ -4,10 +4,12 @@ import { AnimatePresence } from 'framer-motion';
 import { Authenticator, ThemeProvider, View, Heading, Text } from '@aws-amplify/ui-react';
 import { Globe, ArrowLeft } from 'lucide-react';
 
+// Configuration & Styles
 import { configureAmplify, nexusTheme } from './amplify-config';
 import './auth-styles.css';
 import '@aws-amplify/ui-react/styles.css';
 
+// Components
 import BackgroundSystem from './components/BackgroundSystem';
 import TechnicalHeader from './components/TechnicalHeader';
 import Hero from './components/Hero';
@@ -17,10 +19,13 @@ import TechnicalSpecs from './components/TechnicalSpecs';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
+import CareerSection from './components/CareerSection'; // Added
+import CareerModal from './components/CareerModal';     // Added
 import AITerminal from './components/AITerminal';
 import ParticleBackground from './components/ParticleBackground';
 import { DATA } from './constants/data';
 
+// Pages
 import AdminDashboard from './pages/AdminDashboard';
 
 configureAmplify();
@@ -46,15 +51,17 @@ const AuthComponents = {
 
 const PortfolioContainer = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedExperience, setSelectedExperience] = useState(null); // Added state
   const [formData, setFormData] = useState({ name: '', message: '' });
 
   return (
-    <div className="min-h-screen w-full bg-[#050505] text-slate-300 relative font-sans">
+    <div className="min-h-screen w-full bg-[#050505] text-slate-300 relative font-sans scroll-smooth">
       <BackgroundSystem />
       <div className="relative z-10">
         <TechnicalHeader />
         <main className="max-w-6xl mx-auto px-6 md:px-12 pt-20">
           <Hero />
+
           <section id="projects" className="py-32 border-t border-white/5">
             <SectionLabel number="01 /" text="Technical Prototypes" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
@@ -65,15 +72,38 @@ const PortfolioContainer = () => {
               ))}
             </div>
           </section>
+
           <TechnicalSpecs />
-          <ContactSection formData={formData} setFormData={setFormData} />
+
+          <section id="career">
+             <CareerSection
+                careerData={DATA.career}
+                onSelect={(exp) => setSelectedExperience(exp)}
+             />
+          </section>
+
+          <section id="contact" className="py-32 border-t border-white/5">
+            <ContactSection formData={formData} setFormData={setFormData} />
+          </section>
+
           <Footer />
         </main>
       </div>
+
       <AITerminal />
+
       <AnimatePresence>
         {selectedProject && (
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+        {selectedExperience && (
+          <CareerModal
+            experience={selectedExperience}
+            onClose={() => setSelectedExperience(null)}
+          />
         )}
       </AnimatePresence>
     </div>

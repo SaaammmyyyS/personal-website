@@ -6,9 +6,9 @@ const TechnicalHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'projects', href: '/#projects' },
-    { name: 'history', href: '/#career' },
-    { name: 'contact', href: '/#contact' },
+    { name: 'projects', href: '#projects' },
+    { name: 'history', href: '#career' },
+    { name: 'contact', href: '#contact' },
   ];
 
   return (
@@ -28,7 +28,7 @@ const TechnicalHeader = () => {
             href={item.href}
             className="font-mono text-[10px] uppercase tracking-widest text-slate-400 hover:text-cyan-400 transition-colors"
           >
-            // {item.name}
+            {item.name}
           </a>
         ))}
 
