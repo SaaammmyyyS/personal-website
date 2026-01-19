@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Cpu, Zap, CheckCircle2, Github, ExternalLink } from 'lucide-react';
+import { X, Cpu, Zap, CheckCircle2, Github, ExternalLink, Lock } from 'lucide-react';
 
 const ProjectModal = ({ project, onClose }) => {
   if (!project) return null;
@@ -74,13 +74,31 @@ const ProjectModal = ({ project, onClose }) => {
               </div>
 
               <div className="flex flex-col gap-3">
-                {project.github && (
-                  <a href={project.github} target="_blank" rel="noreferrer" className="flex items-center justify-between p-3 border border-white/10 hover:bg-white/5 transition-all text-[10px] font-mono uppercase text-slate-300">
+                {/* 1. GITHUB BUTTON LOGIC */}
+                {project.github && !project.isPrivate ? (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-between p-3 border border-white/10 hover:bg-white/5 transition-all text-[10px] font-mono uppercase text-slate-300"
+                  >
                     Source_Code <Github size={14}/>
                   </a>
+                ) : project.isPrivate && (
+                  /* Shows 'RESTRICTED' state if repo is private */
+                  <div className="flex items-center justify-between p-3 border border-white/5 bg-white/[0.02] text-[10px] font-mono uppercase text-slate-600 cursor-not-allowed">
+                    Source_Code [PRIVATE] <Lock size={12}/>
+                  </div>
                 )}
-                {!project.isPrivate && project.link !== "#" && (
-                  <a href={project.link} target="_blank" rel="noreferrer" className="flex items-center justify-between p-3 bg-cyan-500 text-black hover:bg-cyan-400 transition-all text-[10px] font-mono font-bold uppercase">
+
+                {/* 2. LIVE DEMO BUTTON LOGIC */}
+                {project.link && project.link !== "#" && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-between p-3 bg-cyan-500 text-black hover:bg-cyan-400 transition-all text-[10px] font-mono font-bold uppercase"
+                  >
                     Live_Demo <ExternalLink size={14}/>
                   </a>
                 )}

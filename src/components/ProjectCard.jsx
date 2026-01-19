@@ -8,17 +8,34 @@ const ProjectCard = ({ title, subtitle, tags, link, github, isPrivate }) => {
         <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
           {title}
         </h3>
-        <div className="flex gap-4 relative z-30 pointer-events-auto">
-          {github && (
-            <a href={github} target="_blank" rel="noreferrer" className="text-slate-500 hover:text-white transition-colors" onClick={(e) => e.stopPropagation()}>
+        <div className="flex gap-4 relative z-30 pointer-events-auto items-center">
+          {github && !isPrivate ? (
+            <a
+              href={github}
+              target="_blank"
+              rel="noreferrer"
+              className="text-slate-500 hover:text-white transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
               <Github size={18} />
             </a>
+          ) : isPrivate && (
+            <div className="text-slate-700 cursor-not-allowed" title="Source code is private">
+              <Lock size={16} />
+            </div>
           )}
-          {!isPrivate ? (
-            <a href={link} target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 transition-colors" onClick={(e) => e.stopPropagation()}>
+
+          {link && link !== "#" && (
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              className="text-slate-500 hover:text-cyan-400 transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
               <ExternalLink size={18} />
             </a>
-          ) : <Lock size={18} className="text-slate-800" />}
+          )}
         </div>
       </div>
 

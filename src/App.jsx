@@ -7,17 +7,14 @@ import TechnicalHeader from './components/TechnicalHeader';
 import Hero from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import SectionLabel from './components/SectionLabel';
-import TechnicalSpecs from './components/TechnicalSpecs';
-import CareerSection from './components/CareerSection';
+import TechnicalSpecs from './components/TechnicalSpecs'; // This is now the combined component
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
-import CareerModal from './components/CareerModal';
-import AITerminal from './components/AITerminal'; // New Component
+import AITerminal from './components/AITerminal';
 
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedExp, setSelectedExp] = useState(null);
   const [formData, setFormData] = useState({ name: '', message: '' });
 
   return (
@@ -30,6 +27,7 @@ function App() {
         <main className="max-w-6xl mx-auto px-6 md:px-12 pt-20">
           <Hero />
 
+          {/* 01 / PROJECTS */}
           <section id="projects" className="py-32 border-t border-white/5">
             <SectionLabel number="01 /" text="Technical Prototypes" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
@@ -43,11 +41,6 @@ function App() {
 
           <TechnicalSpecs />
 
-          <section id="career" className="py-32 border-t border-white/5">
-            <SectionLabel number="02 /" text="Professional Experience" />
-            <CareerSection careerData={DATA.career} onSelect={setSelectedExp} />
-          </section>
-
           <ContactSection formData={formData} setFormData={setFormData} />
           <Footer />
         </main>
@@ -58,9 +51,6 @@ function App() {
       <AnimatePresence mode="wait">
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-        )}
-        {selectedExp && (
-          <CareerModal experience={selectedExp} onClose={() => setSelectedExp(null)} />
         )}
       </AnimatePresence>
     </div>

@@ -2,11 +2,12 @@ export const DATA = {
   profile: {
     name: "Ivan Sam",
     email: "ivansamwabina@gmail.com",
-    role: "Backend Architect",
-    displayRole: "Backend Architect",
+    role: "Fullstack Engineer",
+    displayRole: "Fullstack Engineer // Systems Architect",
+    cvLink: "https://ivan-sam-portfolio.vercel.app/Resume.pdf",
     location: "Davao City, PH",
     status: "Open for Opportunities",
-    primaryStack: "Spring Boot // NestJS",
+    primaryStack: "Spring Boot // React // AWS",
     socials: {
       github: "https://github.com/SaaammmyyyS",
       linkedin: "https://www.linkedin.com/in/ivan-sam-wabina-875a91297/",
@@ -27,6 +28,12 @@ export const DATA = {
       color: "text-orange-400",
       icon: "cloud",
       tags: ["EC2", "Lambda", "ECS (Fargate)", "Elastic Beanstalk"]
+    },
+    {
+      title: "Frontend & UI",
+      color: "text-pink-400",
+      icon: "layers",
+      tags: ["React 19", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"]
     },
     {
       title: "Data & Storage",
@@ -98,7 +105,27 @@ export const DATA = {
       github: null,
       isPrivate: true,
       detailedDescription: null
-    }
+    },
+    {
+      id: "proj-samahan-2024",
+      title: "SAMAHAN All For More 2024-2025",
+      subtitle: "Lead Backend Developer for the official digital ecosystem of the Ateneo de Davao University Student Government.",
+      tags: ["Next.js", "Supabase", "PostgreSQL", "Realtime"],
+      link: "https://samahan.addu.edu.ph",
+      github: null,
+      isPrivate: true,
+      detailedDescription: {
+        headline: "Unified Governance Platform & Real-time Information Hub",
+        overview: "Led the backend engineering effort for the official SAMAHAN website as part of the Systems Developer (Sysdev) team. We architected a unified platform to serve over 8,000 students, focusing on seamless data delivery and high-availability during critical university periods.",
+        innovation: [
+          "Lead Backend Engineering: Directed the technical implementation of database schemas and server-side logic, ensuring data integrity across multiple student government clusters.",
+          "BaaS Orchestration: Leveraged Supabase to implement complex Row-Level Security (RLS) policies and real-time database listeners for live event updates.",
+          "Scalable Governance: Designed the backend to handle massive concurrency spikes during student elections and organization registrations without the overhead of manual server management."
+        ],
+        stack: "Next.js (Frontend), Supabase (Auth, Database, Storage), PostgreSQL, TypeScript."
+      }
+    },
+
   ],
 
   career: [

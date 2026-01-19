@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, X, Cpu, MessageSquare, ShieldCheck, Database, Sparkles } from 'lucide-react';
+import { Send, X, Cpu, MessageSquare, ShieldCheck, Database, Sparkles, Terminal } from 'lucide-react';
 
 const FormattedMessage = ({ text }) => {
   if (!text) return null;
@@ -9,7 +9,7 @@ const FormattedMessage = ({ text }) => {
       {parts.map((part, i) => {
         if (part.startsWith('**') && part.endsWith('**')) {
           return (
-            <span key={i} className="text-white font-bold">
+            <span key={i} className="text-white font-bold underline decoration-cyan-500/30">
               {part.slice(2, -2)}
             </span>
           );
@@ -48,11 +48,13 @@ const AITerminal = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef(null);
+
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'SYSTEM_BOOT: **IS_ARCHITECT_v1.0**\nUplink to S3 knowledge base ACTIVE.\nQuery my architecture or career history.',
-      isAnimated: true
+      content: "Welcome. I am **Ivan's Architectural Intelligence**, a custom RAG (Retrieval-Augmented Generation) agent.\n\nI was built using **AWS Lambda** for serverless execution, **Amazon Bedrock (Claude 3)** for reasoning, and an **S3 Identity Vault** for secure data retrieval. I don't just chat—I analyze Ivan's production code, project logs, and system designs to answer your queries.\n\nHow can I assist with your technical evaluation?",
+      isAnimated: true,
+      meta: "AWS_INFRA // CLAUDE_3_BEDROCK // S3_RAG"
     }
   ]);
 
@@ -106,10 +108,8 @@ const AITerminal = () => {
         }),
       });
       const data = await response.json();
-
       const aiResponse = data.answer || "**ERROR**: Uplink returned empty payload.";
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse, isAnimated: false }]);
-
     } catch (error) {
       setMessages(prev => [...prev, { role: 'assistant', content: '**ERROR**: UPLINK_TIMEOUT.\nCheck your protocol.', isAnimated: false }]);
     } finally {
@@ -123,15 +123,15 @@ const AITerminal = () => {
         <div className="relative bg-[#0a0a0a] border border-cyan-500/50 p-3 rounded-xl shadow-2xl max-w-[220px] md:max-w-[280px] animate-in slide-in-from-right-5 font-mono">
           <button onClick={() => setShowHint(false)} className="absolute -top-2 -right-2 bg-black border border-cyan-500/50 rounded-full p-1 text-cyan-500 hover:text-white"><X size={10} /></button>
           <div className="text-[10px] md:text-[11px] text-cyan-100 leading-tight italic">
-            "I have access to Ivan's full stack and S3-stored project logs."
+            "Ask me about Ivan's **AWS architecture** or his **NestJS/Spring Boot** stack."
           </div>
-          <button onClick={() => {setIsOpen(true); setShowHint(false);}} className="mt-2 text-[9px] text-cyan-400 font-bold uppercase underline">Init_Uplink</button>
+          <button onClick={() => {setIsOpen(true); setShowHint(false);}} className="mt-2 text-[9px] text-cyan-400 font-bold uppercase underline">Establish_Connection</button>
         </div>
       )}
 
       {!isOpen && (
         <button onClick={() => setIsOpen(true)} className="w-12 h-12 md:w-14 md:h-14 bg-black border border-cyan-500/30 text-cyan-500 flex items-center justify-center rounded-full hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all group relative">
-          <MessageSquare size={20} className="md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
+          <Terminal size={20} className="md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
           <div className="absolute inset-0 rounded-full bg-cyan-500/10 animate-ping" />
         </button>
       )}
@@ -140,39 +140,47 @@ const AITerminal = () => {
         <div className="w-[calc(100vw-2rem)] md:w-[520px] max-w-[520px] bg-[#080808]/95 backdrop-blur-md border border-cyan-500/20 shadow-2xl flex flex-col animate-in slide-in-from-bottom-5 duration-300 rounded-lg overflow-hidden">
           <div className="bg-cyan-950/40 p-3 flex items-center justify-between border-b border-white/10">
             <div className="flex gap-4 items-center">
-               <span className="text-[9px] font-mono text-cyan-500/80 uppercase flex items-center gap-1.5"><ShieldCheck size={12}/> SECURE_NODE</span>
-               <span className="text-[9px] font-mono text-emerald-500/80 uppercase flex items-center gap-1.5"><Database size={12}/> S3_VAULT_SYNCED</span>
+                <span className="text-[9px] font-mono text-cyan-500/80 uppercase flex items-center gap-1.5"><ShieldCheck size={12}/> ENCRYPTED_NODE</span>
+                <span className="text-[9px] font-mono text-emerald-500/80 uppercase flex items-center gap-1.5"><Database size={12}/> DATA_VAULT_LIVE</span>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-white p-1 transition-colors"><X size={20} /></button>
           </div>
 
           <div ref={scrollRef} className="h-[350px] md:h-[420px] overflow-y-auto p-5 space-y-6 font-mono text-[12px] leading-relaxed scrollbar-thin scrollbar-thumb-cyan-900/50">
             {messages.map((msg, i) => (
-              <div key={i} className={`flex gap-3 ${msg.role === 'assistant' ? 'text-cyan-400' : 'text-slate-200'}`}>
-                <span className="opacity-40 shrink-0 mt-1">{msg.role === 'assistant' ? '>>' : 'USR:'}</span>
-                <div className={`${msg.role === 'assistant' ? 'bg-cyan-500/5 border-l border-cyan-500/20 pl-3 py-1' : ''} flex-1`}>
-                  {msg.role === 'assistant' && !msg.isAnimated ? (
-                    <Typewriter text={msg.content} onFinished={() => markAsAnimated(i)} />
-                  ) : (
-                    <FormattedMessage text={msg.content} />
-                  )}
+              <div key={i} className="space-y-1">
+                {/* Optional Metadata Header for Assistant Messages */}
+                {msg.role === 'assistant' && msg.meta && (
+                    <div className="text-[8px] text-cyan-700 ml-7 font-bold tracking-tighter uppercase mb-1">
+                        {msg.meta}
+                    </div>
+                )}
+                <div className={`flex gap-3 ${msg.role === 'assistant' ? 'text-cyan-400' : 'text-slate-200'}`}>
+                    <span className="opacity-40 shrink-0 mt-1">{msg.role === 'assistant' ? '>>' : 'USR:'}</span>
+                    <div className={`${msg.role === 'assistant' ? 'bg-cyan-500/5 border-l border-cyan-500/20 pl-3 py-1' : ''} flex-1`}>
+                    {msg.role === 'assistant' && !msg.isAnimated ? (
+                        <Typewriter text={msg.content} onFinished={() => markAsAnimated(i)} />
+                    ) : (
+                        <FormattedMessage text={msg.content} />
+                    )}
+                    </div>
                 </div>
               </div>
             ))}
             {isTyping && (
               <div className="flex gap-3 text-cyan-600 animate-pulse text-[10px] ml-7">
-                <span>[EXTRACTING_FROM_S3_OBJECTS...]</span>
+                <span>[SCANNING_AWS_DATA_LAKE...]</span>
               </div>
             )}
           </div>
 
           <div className="p-4 bg-black border-t border-white/10">
             <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar pb-1">
-              {['/stack', '/projects', '/bio'].map(cmd => (
+              {['/stack', '/architecture', '/projects'].map(cmd => (
                 <button
                   key={cmd}
-                  onClick={() => handleSendMessage(null, `Give me a technical briefing on your ${cmd.replace('/','')}`)}
-                  className="text-[10px] border border-cyan-500/30 px-3 py-1.5 text-cyan-400 rounded-md bg-cyan-500/5 whitespace-nowrap hover:bg-cyan-500/20 transition-all font-bold tracking-wider"
+                  onClick={() => handleSendMessage(null, `Requesting technical analysis: ${cmd.replace('/','')}`)}
+                  className="text-[9px] border border-cyan-500/20 px-3 py-1.5 text-cyan-500/70 rounded-md bg-cyan-500/5 whitespace-nowrap hover:bg-cyan-500/20 hover:text-cyan-400 transition-all font-mono tracking-tighter"
                 >
                   {cmd.toUpperCase()}
                 </button>
@@ -183,7 +191,7 @@ const AITerminal = () => {
               <input
                 autoFocus
                 className="flex-1 bg-transparent outline-none text-[12px] font-mono text-white placeholder:text-slate-700"
-                placeholder="QUERY_IVAN_DATABASE..."
+                placeholder="INPUT_QUERY..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />

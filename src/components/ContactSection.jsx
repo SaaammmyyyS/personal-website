@@ -29,7 +29,7 @@ const ContactSection = ({ formData, setFormData }) => {
         <form className="space-y-10">
           <div className="space-y-4">
             <label className="text-[10px] font-mono text-cyan-500 uppercase tracking-[0.3em] flex items-center gap-2">
-              <Terminal size={12}/> User_Identity
+              <Terminal size={12}/> User
             </label>
             <input
               className="w-full bg-transparent border-b border-white/10 py-3 text-white focus:border-cyan-500 outline-none transition-colors font-mono"
@@ -41,7 +41,7 @@ const ContactSection = ({ formData, setFormData }) => {
 
           <div className="space-y-4">
             <label className="text-[10px] font-mono text-cyan-500 uppercase tracking-[0.3em] flex items-center gap-2">
-              <ShieldCheck size={12}/> Message_Payload
+              <ShieldCheck size={12}/> Message
             </label>
             <textarea
               rows="4"
