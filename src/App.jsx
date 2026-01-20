@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import './amplify-config';
+
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import { Authenticator, ThemeProvider, View, Heading, Text } from '@aws-amplify/ui-react';
 import { Globe, ArrowLeft } from 'lucide-react';
-
-import { configureAmplify, nexusTheme } from './amplify-config';
+import { nexusTheme } from './amplify-config';
 import '@aws-amplify/ui-react/styles.css';
 import './auth-styles.css';
 
-configureAmplify();
-
 import { DATA } from './constants/data';
-
 import TechnicalHeader from './components/TechnicalHeader';
 import Hero from './components/Hero';
 import ProjectCard from './components/ProjectCard';
@@ -27,7 +25,6 @@ import BackgroundSystem from './components/BackgroundSystem';
 import SectionLabel from './components/SectionLabel';
 import ParticleBackground from './components/ParticleBackground';
 
-// Pages
 import AdminDashboard from './pages/AdminDashboard';
 
 const ScrollToTop = () => {
@@ -86,6 +83,7 @@ const PortfolioHome = () => {
         <TechnicalHeader />
         <main className="flex-grow max-w-6xl mx-auto px-6 md:px-12 pt-20 w-full">
           <Hero />
+
           <section id="projects" className="py-24 border-t border-white/5">
             <SectionLabel number="01 /" text="Technical Prototypes" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
@@ -96,14 +94,17 @@ const PortfolioHome = () => {
               ))}
             </div>
           </section>
+
           <section id="specs" className="py-24 border-t border-white/5">
             <SectionLabel number="02 /" text="Technical Ecosystem" />
             <TechnicalSpecs />
           </section>
+
           <section id="career" className="py-24 border-t border-white/5">
             <SectionLabel number="03 /" text="Career Path" />
             <CareerSection careerData={DATA.career} onSelect={(exp) => setSelectedExperience(exp)} />
           </section>
+
           <section id="contact" className="py-24 border-t border-white/5">
             <SectionLabel number="04 /" text="Contact Portal" />
             <ContactSection formData={formData} setFormData={setFormData} />
@@ -111,7 +112,9 @@ const PortfolioHome = () => {
         </main>
         <Footer />
       </div>
+
       <AITerminal />
+
       <AnimatePresence mode="wait">
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
@@ -130,6 +133,7 @@ const App = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<PortfolioHome />} />
+
         <Route
           path="/admin"
           element={
@@ -138,6 +142,7 @@ const App = () => {
             </Authenticator.Provider>
           }
         />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

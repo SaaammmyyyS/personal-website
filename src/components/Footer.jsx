@@ -10,12 +10,10 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
 
-          {/* Identity */}
           <div className="md:col-span-5 space-y-6">
             <div>
               <h2 className="font-bold tracking-tighter text-lg uppercase text-white">Ivan Sam</h2>
               <div className="flex items-center gap-2 mt-1">
-                {/* Active Node Indicator */}
                 <div className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
@@ -30,7 +28,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Navigation */}
           <div className="md:col-span-3 space-y-6">
             <h3 className="font-mono text-[10px] text-cyan-500 uppercase tracking-[0.3em] font-bold">
               Index
@@ -59,7 +56,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Uplink */}
           <div className="md:col-span-4 md:text-right space-y-6">
             <h3 className="font-mono text-[10px] text-cyan-500 uppercase tracking-[0.3em] font-bold">
               Social_Uplink

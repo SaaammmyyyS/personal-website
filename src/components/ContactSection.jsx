@@ -1,36 +1,65 @@
 import React, { useState } from 'react';
 import { Terminal, ShieldCheck } from 'lucide-react';
+import { generateClient } from 'aws-amplify/api';
+
+const client = generateClient();
 
 const ContactSection = ({ formData, setFormData }) => {
   const [isTransmitting, setIsTransmitting] = useState(false);
   const [status, setStatus] = useState('IDLE_AWAITING_INPUT');
 
-  const isReady = formData.name.length > 2 && formData.message.length > 5;
+  const isReady = formData.name?.length > 2 && formData.message?.length > 5;
 
-  const handleSimulatedSend = (e) => {
+  const handleRealSend = async (e) => {
     e.preventDefault();
     if (!isReady) return;
-    setIsTransmitting(true);
-    setStatus('ENCRYPTING_PACKET...');
 
-    setTimeout(() => {
-      setStatus('SUCCESS: LOGGED_TO_INTERNAL_JOURNAL');
+    setIsTransmitting(true);
+    setStatus('ESTABLISHING_UPLINK...');
+
+    try {
+      const createMessageMutation = `
+        mutation CreateMessage($name: String!, $email: String!, $content: String!) {
+          createMessage(name: $name, email: $email, content: $content) {
+            id
+            name
+            content   # CRITICAL: Added so the subscription broadcasts the message body
+            createdAt
+          }
+        }
+      `;
+
+      await client.graphql({
+        query: createMessageMutation,
+        variables: {
+          name: formData.name,
+          email: formData.name,
+          content: formData.message
+        }
+      });
+
+      setStatus('SUCCESS: PACKET_RECEIVED_BY_NEXUS');
+      setFormData({ name: '', message: '' });
+    } catch (error) {
+      console.error("Transmission Error:", error);
+      setStatus('ERROR: UPLINK_FAILED_RETRY_LATER');
+    } finally {
       setIsTransmitting(false);
-    }, 2000);
+    }
   };
 
   return (
     <div className="mt-12 max-w-2xl bg-white/[0.02] border border-white/5 p-8 md:p-12 relative overflow-hidden group">
       <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 -rotate-45 translate-x-8 -translate-y-8" />
 
-      <form className="space-y-10">
+      <form className="space-y-10" onSubmit={handleRealSend}>
         <div className="space-y-4">
           <label className="text-[10px] font-mono text-cyan-500 uppercase tracking-[0.3em] flex items-center gap-2">
-            <Terminal size={12}/> User
+            <Terminal size={12}/> User Identifier
           </label>
           <input
             className="w-full bg-transparent border-b border-white/10 py-3 text-white focus:border-cyan-500 outline-none transition-colors font-mono"
-            placeholder="YOUR_NAME / EMAIL"
+            placeholder="ENTER_NAME"
             value={formData.name}
             onChange={(e) => setFormData({...formData, name: e.target.value})}
           />
@@ -38,12 +67,12 @@ const ContactSection = ({ formData, setFormData }) => {
 
         <div className="space-y-4">
           <label className="text-[10px] font-mono text-cyan-500 uppercase tracking-[0.3em] flex items-center gap-2">
-            <ShieldCheck size={12}/> Message
+            <ShieldCheck size={12}/> Intel Packet
           </label>
           <textarea
             rows="4"
             className="w-full bg-white/[0.03] border border-white/10 p-4 text-white focus:border-cyan-500 outline-none transition-colors font-mono text-sm resize-none"
-            placeholder="ENTER MESSAGE"
+            placeholder="ENTER_MESSAGE_BODY"
             value={formData.message}
             onChange={(e) => setFormData({...formData, message: e.target.value})}
           />
@@ -51,7 +80,7 @@ const ContactSection = ({ formData, setFormData }) => {
 
         <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
           <button
-            onClick={handleSimulatedSend}
+            type="submit"
             disabled={!isReady || isTransmitting}
             className={`px-10 py-4 font-mono text-[10px] font-bold tracking-[0.2em] border transition-all ${
               isReady ? 'border-cyan-500 text-cyan-400 hover:bg-cyan-500/10' : 'border-white/10 text-slate-600'

@@ -1,16 +1,22 @@
 import { Amplify } from 'aws-amplify';
 
-export const configureAmplify = () => {
-  Amplify.configure({
-    Auth: {
-      Cognito: {
-        userPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
-        userPoolClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
-        loginWith: { email: true }
-      }
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
+      userPoolClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
+      loginWith: { email: true }
     }
-  });
-};
+  },
+  API: {
+    GraphQL: {
+      endpoint: import.meta.env.VITE_APPSYNC_URL,
+      region: 'ap-southeast-1',
+      defaultAuthMode: 'apiKey',
+      apiKey: import.meta.env.VITE_APPSYNC_API_KEY
+    }
+  }
+});
 
 export const nexusTheme = {
   name: 'nexus-theme',
