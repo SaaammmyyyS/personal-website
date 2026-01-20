@@ -1,9 +1,9 @@
-# 🤖 IS_ARCHITECT_v1.0 (AI Terminal & Admin Nexus)
+# Personal Intelligence & Portfolio System
 
-![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-emerald?style=for-the-badge&logo=statuspage)
-![Stack](https://img.shields.io/badge/INFRA-AWS_SERVERLESS-cyan?style=for-the-badge&logo=amazon-aws)
+A high-performance personal ecosystem built to showcase technical prototypes and professional experience. 
 
-A serverless, context-aware AI Terminal and Administrative Control Center. This isn't just a chat window—it’s a custom **Retrieval-Augmented Generation (RAG)** pipeline that queries my technical history stored securely in the AWS cloud.
+### 💡 The "Boredom" Disclosure
+This project is a product of **intentional over-engineering**. While a standard portfolio could be a static HTML page, I was curious about the limits of serverless real-time synchronization. I built this because I wanted to learn how to manage a global state across a distributed AWS architecture while maintaining a high-fidelity, motion-heavy UI.
 
 ---
 
@@ -12,36 +12,42 @@ A serverless, context-aware AI Terminal and Administrative Control Center. This 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Frontend** | React 18, Vite, Framer Motion | High-performance UI & Animations |
-| **Styling** | Tailwind CSS, Lucide | Technical "Nexus" Aesthetic |
+| **Styling** | Tailwind CSS, Tremor | Technical "Nexus" Aesthetic & Analytics |
+| **Real-Time** | AWS AppSync (GraphQL) | WebSocket-driven Live Message Uplink |
 | **Auth** | AWS Amplify (Cognito) | Secure Admin access via /admin |
-| **AI/LLM** | Amazon Bedrock (Claude 3) | Contextual Reasoning & Analysis |
-| **Serverless** | AWS Lambda, S3 | Ephemeral API & Knowledge Storage |
+| **AI/LLM** | Amazon Bedrock (Claude 3) | Contextual Reasoning (Phase 4) |
+| **Database** | DynamoDB & S3 | Intelligence Storage & Identity Vault |
 
 ## 🏗️ System Architecture
 
-### 1. AI Reasoning Lifecycle (RAG)
-The following visualization shows how the frontend bridges the gap between static data and LLM reasoning.
+### 1. The Intelligence Pipeline (RAG & Live Messaging)
+The following visualization shows how the Nexus bridges the gap between static data, real-time user input, and LLM reasoning.
 
 ```mermaid
 sequenceDiagram
     participant User
-    participant React as React (Modular Frontend)
-    participant Lambda as AWS Lambda (Python)
-    participant S3 as Amazon S3 (Knowledge Base)
-    participant Bedrock as Amazon Bedrock (Claude 3)
+    participant React as React Frontend
+    participant AppSync as AWS AppSync (WS)
+    participant Lambda as AWS Lambda (AI Node)
+    participant DB as DynamoDB / S3
 
-    User->>React: Inputs Query / Clicks Command
-    React->>React: Slices History (Last 4 turns)
+    Note over User, AppSync: [LIVE MESSAGING FLOW]
+    User->>React: Submits Contact Packet
+    React->>AppSync: Mutation: createMessage()
+    AppSync->>DB: Persist to DynamoDB
+    AppSync-->>React: Broadcast to Admin Dashboard (Real-time)
+
+    Note over User, Lambda: [AI REASONING FLOW]
+    User->>React: Queries AI Terminal
     React->>Lambda: POST /chat (Question + Context)
     activate Lambda
-    Lambda->>S3: Fetch data.js (Identity Vault)
-    S3-->>Lambda: Return Technical JSON
-    Lambda->>Lambda: Inject System Prompt & Persona
-    Lambda->>Bedrock: Invoke Model (Identity + History + Question)
-    Bedrock-->>Lambda: Return Analysis
-    Lambda-->>React: 200 OK (JSON Response)
+    Lambda->>DB: Fetch "Identity Vault" (S3 JSON)
+    DB-->>Lambda: Return Technical History
+    Lambda->>Lambda: Inject Persona & System Prompt
+    Lambda->>Lambda: Invoke Bedrock (Claude 3)
+    Lambda-->>React: 200 OK (Analysis Response)
     deactivate Lambda
-    React->>User: Typewriter Animation & Formatted UI
+    React->>User: Typewriter Animation UI
 ```
 
 ### 2. Admin Authentication Flow
@@ -81,9 +87,14 @@ The dashboard provides a real-time "Command & Control" aesthetic, featuring:
 
 ![Nexus Command Dashboard Preview](./public/nexus-command-preview.png)
 
-## 🧐 Why an Admin Dashboard?
+## 🔒 Security & Operations
+* **Live Message Uplink:** Uses GraphQL Subscriptions to push data to the admin without browser refreshes.
+* **Identity Vault:** AI persona data is fetched from **Amazon S3** at runtime, allowing for instant updates without code redeploys.
+* **PII Masking:** Strict system prompts prevent the AI from revealing internal AWS metadata or sensitive project logs.
 
-While this site appears as a static personal portfolio to the public, it is powered by a **dynamic serverless backend**. I built the **Nexus Command** interface to solve two specific challenges:
+## 🧐 Why the Over-Engineering?
 
-1. **Live Content Management**: Instead of hardcoding project details, I can update my "Identity Vault" (S3) and tech stack in real-time without redeploying the entire frontend.
-2. **Infrastructure Monitoring**: It allows me to monitor AI API usage and "Terminate" Lambda nodes if I detect unusual traffic or cost spikes, acting as a personal **Cloud Operations** center.
+I built the **Nexus Command** interface to solve three specific challenges:
+1. **Real-Time Interaction**: Mastering WebSockets via AppSync to see visitor activity as it happens.
+2. **Infrastructure Monitoring**: Monitoring AI API usage and the ability to "Terminate" Lambda nodes if I detect unusual traffic spikes.
+3. **Content Agility**: Updating my "Identity Vault" (S3) in real-time to change how the AI represents my career history without a full CI/CD trigger.
