@@ -6,7 +6,9 @@ import { Sparkles } from 'lucide-react';
 const Hero = () => {
   const handleOpenAI = () => {
     const event = new CustomEvent('open-ai-terminal', {
-      detail: { message: "Consultant protocol initialized via Hero Uplink. Accessing Ivan's S3 data... Ready for architectural inquiries." }
+      detail: {
+        message: "Hi! I'm Ivan's AI assistant. He actually built me from scratch using AWS Bedrock because he wanted to see how far he could push serverless RAG pipelines. I've got a direct uplink to his technical history—how can I help you today?"
+      }
     });
     window.dispatchEvent(event);
   };
