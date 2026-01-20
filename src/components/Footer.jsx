@@ -79,9 +79,6 @@ const Footer = () => {
                <p className="text-[9px] font-mono text-slate-600 uppercase tracking-[0.2em]">
                 &copy; {currentYear} // Developed by Ivan_Sam
               </p>
-              <p className="text-[8px] font-mono text-slate-800 uppercase tracking-[0.1em] italic">
-                All_Systems_Nominal // Stable_Release_v2.0
-              </p>
             </div>
           </div>
 
