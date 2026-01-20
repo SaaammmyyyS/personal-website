@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Cloud, Database, ShieldCheck, Terminal, Info, Layers } from 'lucide-react';
-import SectionLabel from './SectionLabel';
 import { DATA } from '../constants/data';
 
 const iconMap = {
@@ -86,10 +85,8 @@ const TechnicalSpecs = () => {
   };
 
   return (
-    <section id="specs" className="py-24 md:py-32 border-t border-white/5">
-      <SectionLabel number="02 /" text="Technical Ecosystem" />
-
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-16 mt-12">
+    <div className="mt-12">
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-16">
         <div className="max-w-2xl">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white uppercase mb-6">
             Fullstack_Capabilities
@@ -155,7 +152,7 @@ const TechnicalSpecs = () => {
           </div>
         </motion.div>
       )}
-    </section>
+    </div>
   );
 };
 

@@ -14,11 +14,11 @@ const TechnicalHeader = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full py-4 px-6 md:px-12 flex justify-between items-center border-b border-white/5 bg-[#050505]/95 backdrop-blur-xl z-[100]">
-      <Link to="/" className="flex flex-col cursor-pointer">
-        <span className="font-bold tracking-tighter text-lg uppercase text-white">Ivan Sam</span>
+      <Link to="/" className="flex flex-col cursor-pointer group">
+        <span className="font-bold tracking-tighter text-base md:text-lg uppercase text-white group-hover:text-cyan-400 transition-colors">Ivan Sam</span>
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-          <span className="font-mono text-[8px] text-slate-500 uppercase tracking-[0.2em]">System_Online</span>
+          <span className="font-mono text-[7px] md:text-[8px] text-slate-500 uppercase tracking-[0.2em]">System_Online</span>
         </div>
       </Link>
 
@@ -46,15 +46,15 @@ const TechnicalHeader = () => {
 
       <button
         type="button"
-        className="md:hidden relative z-[110] text-cyan-400 p-2"
+        className="md:hidden relative z-[110] text-cyan-400 p-2 hover:bg-white/5 rounded-lg transition-colors"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X size={24} /> : <Terminal size={24} />}
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 top-[73px] left-0 w-full h-screen bg-[#050505] z-[105] p-8 md:hidden flex flex-col gap-8 animate-in fade-in slide-in-from-top-4 duration-200">
-          <nav className="flex flex-col gap-8">
+        <div className="fixed inset-0 top-0 left-0 w-full h-screen bg-[#050505] z-[105] p-8 md:hidden flex flex-col justify-center animate-in fade-in zoom-in duration-200">
+          <nav className="flex flex-col gap-6">
             {navLinks.map((item) => (
               <a
                 key={item.name}
@@ -66,6 +66,15 @@ const TechnicalHeader = () => {
                 <ChevronRight size={20} className="text-cyan-500" />
               </a>
             ))}
+            <a
+              href="/Resume.pdf"
+              target="_blank"
+              onClick={() => setIsOpen(false)}
+              className="mt-4 flex items-center justify-center gap-3 w-full py-6 bg-cyan-500 text-black font-mono text-sm font-black uppercase tracking-widest rounded-sm"
+            >
+              <FileText size={18} />
+              <span>Download_Resume</span>
+            </a>
           </nav>
         </div>
       )}

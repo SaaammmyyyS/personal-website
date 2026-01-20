@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { Card, Title, AreaChart, Metric, Text, Badge } from "@tremor/react";
 import { LogOut, ShieldCheck, RefreshCw, Radio, Globe, LayoutDashboard } from 'lucide-react';
 import { motion } from 'framer-motion';
