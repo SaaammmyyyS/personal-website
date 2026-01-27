@@ -76,6 +76,11 @@ const PortfolioHome = () => {
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [formData, setFormData] = useState({ name: '', message: '' });
 
+  // DEBUG LOG: Open your browser console (F12) to see if the new project is in this list
+  useEffect(() => {
+    console.log("Current Project Data:", DATA.projects);
+  }, []);
+
   return (
     <div className="min-h-screen w-full bg-[#050505] text-slate-300 relative font-sans scroll-smooth overflow-x-hidden">
       <BackgroundSystem />
@@ -88,7 +93,11 @@ const PortfolioHome = () => {
             <SectionLabel number="01 /" text="Technical Prototypes" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
               {DATA.projects.map((p) => (
-                <div key={p.id} onClick={() => setSelectedProject(p)} className="cursor-pointer">
+                <div
+                  key={p.id} // This key MUST be unique
+                  onClick={() => setSelectedProject(p)}
+                  className="cursor-pointer"
+                >
                   <ProjectCard {...p} />
                 </div>
               ))}
@@ -120,7 +129,7 @@ const PortfolioHome = () => {
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         )}
         {selectedExperience && (
-          <CareerModal experience={selectedExperience} onClose={() => setSelectedExperience(null)} />
+          <CareerModal experience={selectedExperience} onClose={() => setSelectedExperience(exp)} />
         )}
       </AnimatePresence>
     </div>

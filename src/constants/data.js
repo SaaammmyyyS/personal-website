@@ -14,7 +14,7 @@ export const DATA = {
     },
     bio: {
       tagline: "Hi there! I'm a software engineer dedicated to building the backbone of digital experiences.",
-      description: "I specialize in architecting resilient backends and high-throughput systems. Currently, I'm focusing on transforming complex business requirements into scalable, production-ready infrastructure."
+      description: "I specialize in architecting resilient backends and multi-tenant SaaS infrastructure. Currently, I'm focusing on high-consistency systems, automated cloud deployments, and secure data isolation."
     },
     education: {
       school: "Davao City University",
@@ -24,10 +24,10 @@ export const DATA = {
 
   cloudExpertise: [
     {
-      title: "AWS Compute",
+      title: "AWS & Cloud Native",
       color: "text-orange-400",
       icon: "cloud",
-      tags: ["EC2", "Lambda", "ECS (Fargate)", "Elastic Beanstalk"]
+      tags: ["App Runner", "ECS (Fargate)", "Lambda", "EC2", "S3"]
     },
     {
       title: "Frontend & UI",
@@ -36,28 +36,48 @@ export const DATA = {
       tags: ["React 19", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"]
     },
     {
-      title: "Data & Storage",
+      title: "Data Architecture",
       color: "text-cyan-400",
       icon: "database",
-      tags: ["RDS (PostgreSQL)", "DynamoDB", "S3", "ElastiCache"]
+      tags: ["PostgreSQL", "Hibernate 7", "Redis", "DynamoDB", "Supabase"]
     },
     {
       title: "DevOps & Security",
       color: "text-emerald-400",
       icon: "shield",
-      tags: ["IAM", "API Gateway", "Route 53", "CloudWatch"]
+      tags: ["Terraform", "Docker", "IAM", "Clerk Auth", "CloudWatch"]
     },
     {
       title: "Core Stack",
       color: "text-purple-400",
       icon: "terminal",
-      tags: ["Spring Boot", "NestJS", "Laravel", "Docker", "Terraform"]
+      tags: ["Spring Boot", "Java 21", "Node.js", "NestJS", "Laravel"]
     }
   ],
 
   learningLog: "Deepening my expertise in the AWS ecosystem, specifically focusing on the Well-Architected Framework, Serverless Design Patterns, and automated Infrastructure as Code (IaC).",
 
   projects: [
+    {
+      id: "node-inventory-saas-2026",
+      title: "Stack Inventory Manager",
+      subtitle: "Enterprise-grade Multi-tenant SaaS platform for real-time inventory tracking and automated audit trails.",
+      tags: ["Spring Boot 3.4", "React 19", "AWS App Runner", "Terraform"],
+      link: "#",
+      github: "https://github.com/SaaammmyyyS/stack-inventory-manager",
+      isPrivate: false,
+      detailedDescription: {
+        headline: "High-Consistency Multi-Tenant SaaS Architecture",
+        overview: "A production-ready SaaS designed for strict data isolation. It solves multi-tenancy by utilizing Hibernate 7's native @TenantId filtering and features a 'Zero-Waste' deployment flow via AWS App Runner and Terraform.",
+        innovation: [
+          "Tenant Isolation: Secure siloed data via X-Tenant-ID headers and Hibernate engine filters.",
+          "Audit Integrity: Defensive history fetchers that preserve transaction trails even for items in the Recycle Bin.",
+          "Enterprise Reporting: Dynamic PDF generation using OpenPDF for real-time inventory valuations.",
+          "Test-Driven Reliability: 100% isolation coverage using H2 in-memory databases to catch tenant leaks."
+        ],
+        stack: "Java 21, Spring Boot 3.4, Hibernate 7, Supabase (Postgres), Clerk Auth, Terraform, AWS App Runner."
+      }
+    },
     {
       id: "proj-cloud-sentry",
       title: "Cloud Sentry",
@@ -68,32 +88,32 @@ export const DATA = {
       isPrivate: false,
       detailedDescription: {
         headline: "Autonomous AI Threat Intelligence",
-        overview: "CLOUD-SENTRY is a high-performance, real-time security monitoring dashboard designed to intercept and visualize live cloud attack vectors. By leveraging a serverless event-driven architecture, it transforms raw logs into an immersive, cyberpunk-inspired intelligence feed with sub-second latency.",
+        overview: "CLOUD-SENTRY intercepts and visualizes live cloud attack vectors using a serverless event-driven architecture and Amazon Bedrock AI.",
         innovation: [
-          "Zero-Polling: Sub-second data propagation via GraphQL Subscriptions (WebSockets).",
-          "AI-in-the-Loop: Every threat is analyzed by Amazon Bedrock (Claude 3) before hitting the UI.",
-          "Cyberpunk UX: A high-fidelity React interface designed for low-latency SOC environments."
+          "Zero-Polling: Sub-second data propagation via GraphQL Subscriptions.",
+          "AI-in-the-Loop: Threat analysis by Claude 3 (Bedrock) before UI delivery.",
+          "Cyberpunk UX: High-fidelity React interface for SOC environments."
         ],
-        stack: "React 18, Tailwind CSS, Apollo Client, AWS Lambda (Python 3.12), Amazon Bedrock, DynamoDB, AppSync."
+        stack: "React 18, Apollo Client, AWS Lambda, Amazon Bedrock, DynamoDB, AppSync."
       }
     },
     {
       id: "proj-lambda-news",
       title: "Lambda News Engine",
-      subtitle: "A serverless news aggregation platform utilizing AWS Lambda for high-speed, event-driven data processing and distribution.",
+      subtitle: "A serverless news aggregation platform utilizing AWS Lambda for high-speed, event-driven data processing.",
       tags: ["AWS Lambda", "Node.js", "Serverless", "Event-Driven"],
       link: "https://lambda-news-engine.vercel.app/",
       github: "https://github.com/SaaammmyyyS/Lambda-News-Engine",
       isPrivate: false,
       detailedDescription: {
-        headline: "Real-time Threat Monitoring Dashboard",
-        overview: "CyberIntel_Sentinel is a production-ready, automated Open-Source Intelligence (OSINT) pipeline. While most dashboards simply fetch data on page load, this system operates as a persistent background engine that archives data 24/7.",
+        headline: "Automated OSINT Intelligence Pipeline",
+        overview: "A persistent background engine that archives global news data 24/7 using EventBridge heartbeats.",
         innovation: [
-          "Decoupled Architecture: Persistent background engine that archives data even when the UI is closed.",
-          "Secure API Delivery: REST endpoint protection with API Key authorization.",
-          "Automated Orchestration: Uses AWS EventBridge 'Heartbeat' triggers for the ETL pipeline."
+          "Decoupled Architecture: Background engine persists even when UI is closed.",
+          "Secure API: REST protection with API Key authorization.",
+          "Automated Orchestration: Uses AWS EventBridge for ETL scheduling."
         ],
-        stack: "React 19 + Vite, AWS EventBridge, AWS Lambda (Python), Amazon DynamoDB, API Gateway."
+        stack: "React 19, AWS EventBridge, AWS Lambda, DynamoDB, API Gateway."
       }
     },
     {
@@ -109,23 +129,21 @@ export const DATA = {
     {
       id: "proj-samahan-2024",
       title: "SAMAHAN All For More 2024-2025",
-      subtitle: "Lead Backend Developer for the official digital ecosystem of the Ateneo de Davao University Student Government.",
+      subtitle: "Lead Backend Developer for the official digital ecosystem of the ADDU Student Government.",
       tags: ["Next.js", "Supabase", "PostgreSQL", "Realtime"],
       link: "https://samahan.addu.edu.ph",
       github: null,
       isPrivate: true,
       detailedDescription: {
-        headline: "Unified Governance Platform & Real-time Information Hub",
-        overview: "Led the backend engineering effort for the official SAMAHAN website as part of the Systems Developer (Sysdev) team. We architected a unified platform to serve over 8,000 students, focusing on seamless data delivery and high-availability during critical university periods.",
+        headline: "Unified Governance & Information Hub",
+        overview: "Architected a platform serving 8,000+ students with real-time data delivery during critical periods.",
         innovation: [
-          "Lead Backend Engineering: Directed the technical implementation of database schemas and server-side logic, ensuring data integrity across multiple student government clusters.",
-          "BaaS Orchestration: Leveraged Supabase to implement complex Row-Level Security (RLS) policies and real-time database listeners for live event updates.",
-          "Scalable Governance: Designed the backend to handle massive concurrency spikes during student elections and organization registrations without the overhead of manual server management."
+          "BaaS Orchestration: Complex RLS policies and real-time database listeners.",
+          "Scalable Governance: Designed for massive concurrency during university elections."
         ],
-        stack: "Next.js (Frontend), Supabase (Auth, Database, Storage), PostgreSQL, TypeScript."
+        stack: "Next.js, Supabase, PostgreSQL, TypeScript."
       }
     },
-
   ],
 
   career: [
@@ -136,48 +154,45 @@ export const DATA = {
       period: "2024 — PRESENT",
       shortDesc: "Engineered robust communication microservices and backend logic for fitness management workflows.",
       details: [
-        "Architected and implemented the core email notification system for automated member alerts and system updates.",
-        "Integrated third-party SMTP services with Spring Boot to ensure high deliverability and reliability.",
-        "Optimized backend processes for handling asynchronous messaging tasks.",
-        "Collaborated on database schema refinements for member activity tracking."
+        "Architected core email notification systems.",
+        "Integrated third-party SMTP services with Spring Boot.",
+        "Optimized asynchronous messaging tasks."
       ],
-      tech: ["Spring Boot", "PostgreSQL", "SMTP", "Docker", "Java"]
+      tech: ["Spring Boot", "PostgreSQL", "Java"]
     },
     {
       id: "exp-sysdev",
-      role: "Systems Developer & Project Lead",
-      company: "Systems Development (Sysdev)",
+      role: "Project Lead",
+      company: "Systems Development",
       period: "2023 — 2024",
-      shortDesc: "Led key software projects within the university's technical organization, focusing on infrastructure and modular design.",
+      shortDesc: "Led technical implementation and overseen system architecture for university projects.",
       details: [
-        "Spearheaded development for multiple organization-led projects, overseeing system architecture and code quality.",
-        "Modernized internal business applications by refactoring monolithic code into modular services.",
-        "Optimized SQL queries to handle large student datasets more efficiently."
+        "Modernized monolithic code into modular services.",
+        "Optimized SQL queries for large student datasets."
       ],
-      tech: ["NestJS", "Node.js", "MySQL", "AWS EC2"]
+      tech: ["NestJS", "Node.js", "AWS EC2"]
     },
     {
       id: "exp-infosoft",
       role: "Backend Engineering Intern",
       company: "Infosoft",
       period: "2022 — 2023",
-      shortDesc: "Worked on the PPMP (Project Procurement Management Plan) system using Laravel.",
+      shortDesc: "Worked on the PPMP procurement system using Laravel.",
       details: [
-        "Contributed to the development and maintenance of the PPMP system using the Laravel framework.",
-        "Streamlined procurement workflows by automating internal data synchronization processes.",
-        "Integrated robust REST APIs to improve data communication between system modules."
+        "Maintained PPMP system using Laravel framework.",
+        "Automated internal data synchronization processes."
       ],
-      tech: ["Laravel", "PHP", "MySQL", "Git"]
+      tech: ["Laravel", "PHP", "MySQL"]
     }
   ],
   philosophy: {
-    coding: "Write code for the next engineer, not the compiler. Prioritize readability and maintainability.",
-    scaling: "Avoid premature optimization. Build for 10x the current load, but design for 100x.",
-    problem_solving: "Deep dive into the 'Why' before touching the 'How'."
+    coding: "Write code for the next engineer, not the compiler.",
+    scaling: "Build for 10x current load, design for 100x.",
+    problem_solving: "Deep dive into the 'Why' before the 'How'."
   },
   skillProficiency: {
-    backend: ["Rest API Design", "Microservices", "Event-Driven Architecture", "Asynchronous Processing"],
-    database: ["Relational Modeling (PostgreSQL)", "NoSQL Design Patterns (DynamoDB)", "Caching Strategies (Redis)"],
-    aws: ["IAM Policy Hardening", "Lambda Power Tuning", "Serverless Framework", "CloudWatch Observability"]
+    backend: ["Multi-tenant SaaS Design", "Hibernate 7 engine", "Microservices", "API Security"],
+    database: ["Relational Modeling (Postgres)", "@TenantId filtering", "NoSQL Patterns"],
+    aws: ["Terraform (IaC)", "AWS App Runner", "IAM Hardening", "CloudWatch"]
   },
 };
