@@ -7,6 +7,7 @@ const CareerModal = ({ experience, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -15,6 +16,7 @@ const CareerModal = ({ experience, onClose }) => {
         className="fixed inset-0 bg-black/95 backdrop-blur-xl cursor-zoom-out"
       />
 
+      {/* Modal Content */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -23,7 +25,7 @@ const CareerModal = ({ experience, onClose }) => {
       >
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"
+          className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors z-[120]"
         >
           <X size={24}/>
         </button>
@@ -53,15 +55,26 @@ const CareerModal = ({ experience, onClose }) => {
           <div className="space-y-6">
             <h4 className="text-white text-xs font-bold uppercase tracking-widest">Key_Responsibilities</h4>
             <ul className="space-y-4">
-              {experience.details ? experience.details.map((detail, idx) => (
+              {experience.details && experience.details.map((detail, idx) => (
                 <li key={idx} className="flex gap-4 text-slate-400 text-sm leading-relaxed">
                   <ChevronRight size={16} className="text-cyan-500 shrink-0 mt-0.5" />
                   {detail}
                 </li>
-              )) : (
-                <li className="text-slate-500 italic text-sm">No detailed logs available for this entry.</li>
-              )}
+              ))}
             </ul>
+
+            {experience.tech && (
+              <div className="pt-6 border-t border-white/5">
+                <h4 className="text-white text-[10px] font-mono uppercase tracking-widest mb-3 text-slate-500">Technologies_Utilized</h4>
+                <div className="flex flex-wrap gap-2">
+                  {experience.tech.map((t) => (
+                    <span key={t} className="text-[9px] font-mono px-2 py-1 bg-white/5 text-slate-400 border border-white/10">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>

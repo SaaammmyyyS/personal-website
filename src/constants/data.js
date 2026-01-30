@@ -151,38 +151,41 @@ export const DATA = {
       id: "exp-gymeasy",
       role: "Backend Developer",
       company: "Gymeasy",
-      period: "2024 — PRESENT",
+      period: "2024 - PRESENT",
       shortDesc: "Engineered robust communication microservices and backend logic for fitness management workflows.",
       details: [
-        "Architected core email notification systems.",
-        "Integrated third-party SMTP services with Spring Boot.",
-        "Optimized asynchronous messaging tasks."
+        "Architected and implemented the core email notification system for automated member alerts and system updates.",
+        "Integrated third-party SMTP services with Spring Boot to ensure high deliverability and reliability.",
+        "Optimized backend processes for handling asynchronous messaging tasks.",
+        "Collaborated on database schema refinements for member activity tracking."
       ],
-      tech: ["Spring Boot", "PostgreSQL", "Java"]
+      tech: ["Spring Boot", "PostgreSQL", "SMTP", "Docker", "Java"]
     },
     {
       id: "exp-sysdev",
-      role: "Project Lead",
-      company: "Systems Development",
-      period: "2023 — 2024",
-      shortDesc: "Led technical implementation and overseen system architecture for university projects.",
+      role: "Systems Developer & Project Lead",
+      company: "Systems Development (Sysdev)",
+      period: "2023 - 2024",
+      shortDesc: "Led key software projects within the university's technical organization, focusing on infrastructure and modular design.",
       details: [
-        "Modernized monolithic code into modular services.",
-        "Optimized SQL queries for large student datasets."
+        "Spearheaded development for multiple organization-led projects, overseeing system architecture and code quality.",
+        "Modernized internal business applications by refactoring monolithic code into modular services.",
+        "Optimized SQL queries to handle large student datasets more efficiently."
       ],
-      tech: ["NestJS", "Node.js", "AWS EC2"]
+      tech: ["NestJS", "Node.js", "MySQL", "AWS EC2"]
     },
     {
       id: "exp-infosoft",
       role: "Backend Engineering Intern",
       company: "Infosoft",
-      period: "2022 — 2023",
-      shortDesc: "Worked on the PPMP procurement system using Laravel.",
+      period: "2022 - 2023",
+      shortDesc: "Worked on the PPMP (Project Procurement Management Plan) system using Laravel.",
       details: [
-        "Maintained PPMP system using Laravel framework.",
-        "Automated internal data synchronization processes."
+        "Contributed to the development and maintenance of the PPMP system using the Laravel framework.",
+        "Streamlined procurement workflows by automating internal data synchronization processes.",
+        "Integrated robust REST APIs to improve data communication between system modules."
       ],
-      tech: ["Laravel", "PHP", "MySQL"]
+      tech: ["Laravel", "PHP", "MySQL", "Git"]
     }
   ],
   philosophy: {

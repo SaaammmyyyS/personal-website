@@ -76,11 +76,6 @@ const PortfolioHome = () => {
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [formData, setFormData] = useState({ name: '', message: '' });
 
-  // DEBUG LOG: Open your browser console (F12) to see if the new project is in this list
-  useEffect(() => {
-    console.log("Current Project Data:", DATA.projects);
-  }, []);
-
   return (
     <div className="min-h-screen w-full bg-[#050505] text-slate-300 relative font-sans scroll-smooth overflow-x-hidden">
       <BackgroundSystem />
@@ -94,7 +89,7 @@ const PortfolioHome = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
               {DATA.projects.map((p) => (
                 <div
-                  key={p.id} // This key MUST be unique
+                  key={p.id}
                   onClick={() => setSelectedProject(p)}
                   className="cursor-pointer"
                 >
@@ -129,7 +124,7 @@ const PortfolioHome = () => {
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         )}
         {selectedExperience && (
-          <CareerModal experience={selectedExperience} onClose={() => setSelectedExperience(exp)} />
+          <CareerModal experience={selectedExperience} onClose={() => setSelectedExperience(null)} />
         )}
       </AnimatePresence>
     </div>
@@ -142,7 +137,6 @@ const App = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<PortfolioHome />} />
-
         <Route
           path="/admin"
           element={
@@ -151,7 +145,6 @@ const App = () => {
             </Authenticator.Provider>
           }
         />
-
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
