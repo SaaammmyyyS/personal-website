@@ -87,10 +87,12 @@ The dashboard provides a real-time "Command & Control" aesthetic, featuring:
 
 ![Nexus Command Dashboard Preview](./public/nexus-command-preview.png)
 
-## 🔒 Security & Operations
-* **Live Message Uplink:** Uses GraphQL Subscriptions to push data to the admin without browser refreshes.
-* **Identity Vault:** AI persona data is fetched from **Amazon S3** at runtime, allowing for instant updates without code redeploys.
-* **PII Masking:** Strict system prompts prevent the AI from revealing internal AWS metadata or sensitive project logs.
+### 3. Security, Ops, & Structure
+## 🔒 Security & Optimization Protocols
+
+* **Multi-Layer Rate Limiting:** Implemented a "Token Bucket" algorithm via `localStorage` and frontend state to throttle AI requests to 5 req/min, protecting AWS Bedrock costs.
+* **Identity Vault:** Data is fetched from **Amazon S3** at runtime, ensuring the AI persona is current without code redeploys.
+* **Performance:** Canvas particles are optimized for mobile by ignoring vertical resizes (address bar toggles) and utilizing squared distance calculations to avoid expensive square root operations.
 
 ## 🧐 Why the Over-Engineering?
 
