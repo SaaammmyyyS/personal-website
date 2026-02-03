@@ -19,12 +19,16 @@ const BackgroundSystem = () => {
         style={{
           position: 'absolute',
           inset: 0,
-          opacity: 0.4,
-          background: 'radial-gradient(circle at 50% 50%, #111827 0%, #050505 100%)',
-          pointerEvents: 'none'
+          opacity: 0.6,
+          background: 'radial-gradient(circle at 50% 50%, #0f172a 0%, #050505 100%)',
+          pointerEvents: 'none',
+          zIndex: 1
         }}
       />
-      <ParticleBackground />
+
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <ParticleBackground />
+      </div>
     </div>
   );
 };

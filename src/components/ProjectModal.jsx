@@ -84,7 +84,6 @@ const ProjectModal = ({ project, onClose }) => {
                     Source_Code <Github size={14}/>
                   </a>
                 ) : project.isPrivate && (
-                  /* Shows 'RESTRICTED' state if repo is private */
                   <div className="flex items-center justify-between p-3 border border-white/5 bg-white/[0.02] text-[10px] font-mono uppercase text-slate-600 cursor-not-allowed">
                     Source_Code [PRIVATE] <Lock size={12}/>
                   </div>

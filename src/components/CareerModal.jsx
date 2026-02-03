@@ -7,7 +7,6 @@ const CareerModal = ({ experience, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -16,7 +15,6 @@ const CareerModal = ({ experience, onClose }) => {
         className="fixed inset-0 bg-black/95 backdrop-blur-xl cursor-zoom-out"
       />
 
-      {/* Modal Content */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}

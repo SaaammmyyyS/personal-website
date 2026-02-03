@@ -5,7 +5,6 @@
   --color-architect-cyan: #22D3EE;
   --color-architect-orange: #F97316;
 
-  /* Restoration of Tremor Dashboard Colors */
   --color-tremor-brand: var(--color-architect-cyan);
   --color-tremor-background: var(--color-architect-navy);
 }
@@ -29,7 +28,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom Scrollbar for the Terminal */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
