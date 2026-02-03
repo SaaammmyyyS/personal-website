@@ -50,12 +50,10 @@ const AITerminal = () => {
     const now = Date.now();
     const limitWindow = 60 * 1000;
     const maxMessages = 5;
-
     const usage = JSON.parse(localStorage.getItem('ai_usage') || '[]');
     const validUsage = usage.filter(time => now - time < limitWindow);
 
     if (validUsage.length >= maxMessages) return false;
-
     validUsage.push(now);
     localStorage.setItem('ai_usage', JSON.stringify(validUsage));
     return true;
@@ -89,7 +87,7 @@ const AITerminal = () => {
     }
 
     const historyForAPI = messages
-      .filter(m => m.role === 'user' || (m.role === 'assistant' && !m.content.includes("Welcome")))
+      .filter(m => m.role === 'user' || (m.role === 'assistant' && !m.meta?.includes("SYS")))
       .slice(-4)
       .map(m => ({ role: m.role, content: m.content.replace(/\*\*/g, '') }));
 
@@ -104,15 +102,24 @@ const AITerminal = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: query, history: historyForAPI }),
       });
+
       const data = await response.json();
+
+      if (!response.ok) throw new Error(data.answer || "Uplink Error");
+
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: data.answer || "No response from uplink.",
+        content: data.answer,
         isAnimated: false,
         meta: "INBOUND_DATA // STACK_READ"
       }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'assistant', content: "**ERROR**: Connection timeout.", isAnimated: false }]);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "**ERROR**: Connection unstable. Please re-initialize query.",
+        meta: "SYS_FAULT // TIMEOUT",
+        isAnimated: false
+      }]);
     } finally {
       setIsTyping(false);
     }
@@ -164,7 +171,7 @@ const AITerminal = () => {
               {messages.map((msg, i) => (
                 <div key={i} className="space-y-1">
                   {msg.role === 'assistant' && msg.meta && (
-                    <div className={`text-[8px] ml-7 font-bold tracking-tighter uppercase mb-1 ${msg.meta.includes('LIMIT') ? 'text-red-700' : 'text-cyan-700'}`}>
+                    <div className={`text-[8px] ml-7 font-bold tracking-tighter uppercase mb-1 ${msg.meta.includes('FAULT') || msg.meta.includes('THROTTLE') ? 'text-red-700' : 'text-cyan-700'}`}>
                       {msg.meta}
                     </div>
                   )}
