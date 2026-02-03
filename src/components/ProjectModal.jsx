@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Cpu, Zap, CheckCircle2, Github, ExternalLink, Lock } from 'lucide-react';
+import { X, Cpu, Zap, CheckCircle2, Github, ExternalLink, Lock, Activity } from 'lucide-react';
 
 const ProjectModal = ({ project, onClose }) => {
   if (!project) return null;
@@ -68,6 +68,22 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
 
             <div className="space-y-8 border-l border-white/5 pl-8">
+              {project.uptimeBadge && (
+                <div>
+                  <h4 className="text-[10px] text-slate-500 font-mono tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <Activity size={12} className="text-emerald-500 animate-pulse" />
+                    System_Status
+                  </h4>
+                  <div className="p-3 border border-white/5 bg-white/[0.02] inline-block">
+                    <img
+                      src={project.uptimeBadge}
+                      alt="Uptime monitor"
+                      className="h-4 brightness-90 contrast-125"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div>
                 <h4 className="text-[10px] text-slate-500 font-mono tracking-widest uppercase mb-4">Tech_Stack</h4>
                 <p className="text-white font-mono text-[10px] leading-loose">{project.detailedDescription.stack}</p>

@@ -64,6 +64,7 @@ export const DATA = {
       subtitle: "Enterprise-grade Multi-tenant SaaS platform for real-time inventory tracking and automated audit trails.",
       tags: ["Spring Boot 3.4", "React 19", "AWS App Runner", "Terraform"],
       link: "#",
+      uptimeBadge: null, // Private/Internal
       github: "https://github.com/SaaammmyyyS/stack-inventory-manager",
       isPrivate: false,
       detailedDescription: {
@@ -84,6 +85,7 @@ export const DATA = {
       subtitle: "A real-time security monitoring dashboard designed to track AWS infrastructure health and visualize system vulnerabilities.",
       tags: ["React", "Tailwind", "AWS", "Infrastructure"],
       link: "https://cloud-sentry.vercel.app/",
+      uptimeBadge: "https://uptime.betterstack.com/status-badges/v3/monitor/2ee01.svg",
       github: "https://github.com/SaaammmyyyS/cloud-sentry",
       isPrivate: false,
       detailedDescription: {
@@ -103,6 +105,7 @@ export const DATA = {
       subtitle: "A serverless news aggregation platform utilizing AWS Lambda for high-speed, event-driven data processing.",
       tags: ["AWS Lambda", "Node.js", "Serverless", "Event-Driven"],
       link: "https://lambda-news-engine.vercel.app/",
+      uptimeBadge: "https://uptime.betterstack.com/status-badges/v3/monitor/2ee0i.svg",
       github: "https://github.com/SaaammmyyyS/Lambda-News-Engine",
       isPrivate: false,
       detailedDescription: {
@@ -122,6 +125,7 @@ export const DATA = {
       subtitle: "Management ecosystem for fitness centers featuring automated scheduling, member tracking, and resilient backend logic.",
       tags: ["Spring Boot", "PostgreSQL", "Docker", "SMTP"],
       link: "#",
+      uptimeBadge: null,
       github: null,
       isPrivate: true,
       detailedDescription: null
@@ -132,6 +136,7 @@ export const DATA = {
       subtitle: "Lead Backend Developer for the official digital ecosystem of the ADDU Student Government.",
       tags: ["Next.js", "Supabase", "PostgreSQL", "Realtime"],
       link: "https://samahan.addu.edu.ph",
+      uptimeBadge: "https://uptime.betterstack.com/status-badges/v3/monitor/2ee0m.svg",
       github: null,
       isPrivate: true,
       detailedDescription: {
